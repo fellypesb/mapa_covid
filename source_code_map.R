@@ -14,7 +14,7 @@ library(curl)
 
 # loading and modifying dataset
 
-uri <- 'https://raw.githubusercontent.com/fellypesb/mapa_covid/master/dataset/covid19_munic_pa_20200519.csv'
+uri <- 'https://raw.githubusercontent.com/fellypesb/mapa_covid/master/dataset/covid19_munic_pa_20200521.csv'
 covid <- read.csv(uri)
 cases_city <- as.data.frame(table(covid$Município)) %>% rename(name_muni=Var1)
 cases_city[1] <- str_to_title(cases_city$name_muni)
@@ -30,9 +30,9 @@ data_map$Freq[is.na(data_map$Freq)] <- 0 # clear nan
 
 # setting labels 
 
-data_map$labels <- cut(data_map$Freq,breaks=c(-1,20,100,400,1000,3000,6000,Inf),
+data_map$labels <- cut(data_map$Freq,breaks=c(-1,20,100,400,1000,3000,7000,Inf),
     labels=c("0 - 20", "21 - 100", "101 - 400",
-             "401 - 1000","1001 - 3000", "3001 - 6000", "6000+"))
+             "401 - 1000","1001 - 3000", "3001 - 7000", "7000+"))
   
 # plotting map
 
@@ -46,7 +46,7 @@ plot_map <- ggplot()+
                          height = unit(3,"cm"),
                          width = unit(3, "cm"))+
   labs(title="Casos de Covid-19 no Pará",
-       caption = "Atualizado em 19/05/2020",
+       caption = "Atualizado em 21/05/2020",
        fill="Casos \nConfirmados",
        x=element_blank(),
        Y=element_blank())+
@@ -87,5 +87,5 @@ full_map
 # save plot
 
 ggsave(plot=last_plot(),
-       filename = "./plot_map_covid.png",
+       filename = "./plot_map_covid_20200521.png",
        dpi = 300)
